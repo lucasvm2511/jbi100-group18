@@ -14,7 +14,7 @@ You can use this as a basic template for your JBI100 visualization project.
 We suggest you to create a virtual environment for running this app with Python 3. Clone this repository 
 and open your terminal/command prompt in the root folder.
 
-#dit is een test
+#dit is een test2
 open the command prompt
 cd into the folder where you want to save the files and run the following commands. To get the HTTPS link, press the clone button in the right top corner and then copy the link under "Clone with HTTPS". 
 
