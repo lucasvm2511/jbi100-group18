@@ -1,5 +1,5 @@
 from dash import dcc, html
-from ..config import color_list1, color_list2
+from ..config import color_list1, color_list2, color_list3
 
 
 def generate_description_card():
@@ -38,6 +38,12 @@ def generate_control_card():
             dcc.Dropdown(
                 id="select-color-scatter-2",
                 options=[{"label": i, "value": i} for i in color_list2],
+                value=color_list2[0],
+            ),
+            html.Label("Color bar"),
+            dcc.Dropdown(
+                id="select-color-bar3",
+                options=[{"label": i, "value": i} for i in color_list3],
                 value=color_list2[0],
             ),
         ], style={"textAlign": "float-left"}

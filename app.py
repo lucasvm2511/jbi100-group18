@@ -1,8 +1,10 @@
 from jbi100_app.main import app
 from jbi100_app.views.menu import make_menu_layout
 from jbi100_app.views.scatterplot import Scatterplot
+from jbi100_app.views.bar_chart import Bar_chart
+import pandas as pd
 
-from dash import html
+from dash import html, dcc
 import plotly.express as px
 from dash.dependencies import Input, Output
 
@@ -10,10 +12,16 @@ from dash.dependencies import Input, Output
 if __name__ == '__main__':
     # Create data
     df = px.data.iris()
-
+    df2 = pd.DataFrame({
+        "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
+        "Amount": [4, 1, 2, 2, 4, 5],
+        "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
+    })
     # Instantiate custom views
     scatterplot1 = Scatterplot("Scatterplot 1", 'sepal_length', 'sepal_width', df)
     scatterplot2 = Scatterplot("Scatterplot 2", 'petal_length', 'petal_width', df)
+    #fig = px.bar(df2, x="Fruit", y="Amount", color="City", barmode="group")
+    bar1= Bar_chart("Bar chart", 'petal_length', 'petal_width', df)
 
     app.layout = html.Div(
         id="app-container",
@@ -31,7 +39,8 @@ if __name__ == '__main__':
                 className="nine columns",
                 children=[
                     scatterplot1,
-                    scatterplot2
+                    scatterplot2,
+                    bar1
                 ],
             ),
         ],
@@ -53,6 +62,14 @@ if __name__ == '__main__':
     ])
     def update_scatter_2(selected_color, selected_data):
         return scatterplot2.update(selected_color, selected_data)
+
+    @app.callback(
+        Output(bar1.html_id, "figure"), [
+        Input("select-color-bar3", "value"),
+        Input(scatterplot2.html_id, 'selectedData')
+    ])
+    def update_bar3(selected_color, selected_data):
+        return bar1.update(selected_color, selected_data)
 
 
     app.run_server(debug=False, dev_tools_ui=False)

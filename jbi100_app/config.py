@@ -2,3 +2,4 @@
 
 color_list1 = ["green", "blue"]
 color_list2 = ["red", "purple"]
+color_list3 = ["blue", "cyan"]
