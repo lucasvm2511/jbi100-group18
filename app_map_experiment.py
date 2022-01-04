@@ -128,3 +128,4 @@ def select_district(clickData):
 
 
 app.run_server(debug=True)
+#test
