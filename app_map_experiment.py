@@ -36,7 +36,7 @@ app = dash.Dash(__name__)
 # Describes what the application look like; aka dash components (without data)
 app.layout = html.Div([
     # Give title to website
-    html.H1("Mapping of accidents in Great Britain", style={'text-align': 'center'}),
+html.H1("Mapping of accidents in Great Britain", style={'text-align': 'center'}),
     # Make a checklist for severity; Create interactive menu Severity
 
     html.Div([html.H3('Filtering'),html.P("Pick severity:"),
@@ -49,6 +49,7 @@ app.layout = html.Div([
                  value='All',
                  style={}
                  ),
+    # Make a checklist for weather; Create interactive menu Severity
     html.P("Pick weather conditions:"),
     dcc.Dropdown(id="weather_conditions",
                  options=[{'label': 'All', 'value': 'All'},
@@ -62,6 +63,7 @@ app.layout = html.Div([
                  value='All',
                  style={}
                  ),
+<<<<<<< Updated upstream
               dcc.Graph(id='district_graph', figure={})]
              ,style={'width': '30%','display': 'inline-block'}),
     html.Div(children=[
@@ -69,6 +71,29 @@ app.layout = html.Div([
 
     html.Div(id='output_container', children=[]),
     html.Div(id='output_container2', children=[]),
+=======
+    # Make a checklist for weather; Create interactive menu Severity
+    html.P("Pick junction control:"),
+    dcc.Dropdown(id="junction_control",
+                 options=[{'label': 'All', 'value': 'All'},
+                          {'label': 'Not a junction or within 20 meters', 'value': 0},
+                          {'label': 'Authorised person', 'value': 1},
+                          {'label': 'Auto traffic signal', 'value': 2},
+                          {'label': 'Stop sign', 'value': 3},
+                          {'label': 'Give way or uncontrolled', 'value': 4},
+                          {'label': 'Unknown', 'value': 9}],
+                 multi=False,
+                 value='All',
+                 style={'width': '40%'}
+                 ),
+    html.Div(id='output_container', children=[]),
+    html.Div(id='output_container2', children=[]),
+    html.Div(id='output_container3', children=[]),
+    dcc.Graph(id="choropleth", figure={}, config={'scrollZoom': False,
+                                                  'doubleClick': 'reset', # double click it will reset
+                                                  'showTips': True}), # if you select a part of the graph it will zoom in
+    dcc.Graph(id='district_graph', figure={}),
+>>>>>>> Stashed changes
 
 ],style={'font-family': "verdana"})
 
@@ -76,12 +101,14 @@ app.layout = html.Div([
 # Callback; inserts data in the dash components
 @app.callback(
     [Output(component_id="output_container", component_property="children"),
-     Output(component_id="choropleth", component_property="figure")],
+     Output(component_id="choropleth", component_property="figure"),],
     [Input(component_id="Casualty_Severity", component_property="value"),
-     Input(component_id="weather_conditions", component_property="value")]
+     Input(component_id="weather_conditions", component_property="value"),
+     Input(component_id="junction_control", component_property="value")]
 )
+
 # argument in function refers to component_property in the Input()
-def update_graph(option_selected, option_selected2):
+def update_graph(option_selected, option_selected2, option_selected3):
     if option_selected == 'All':
         filtered_df_casualty = road_df  # if all is selected, do not filter
     else:
@@ -95,6 +122,13 @@ def update_graph(option_selected, option_selected2):
     filtered_group_df = filtered_df_weather.groupby('Local_Authority_(District)').count()[
         'Accidents_amount'].to_frame().reset_index()
 
+    if option_selected3 == 'All':
+        filtered_df_junction = filtered_df_casualty  # if all is selected, do not filter
+    else:
+        filtered_df_junction = filtered_df_casualty[filtered_df_casualty['Junction_Control'] == option_selected3]
+    filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
+    filtered_group_df = filtered_df_junction.groupby('Local_Authority_(District)').count()[
+        'Accidents_amount'].to_frame().reset_index()
     fig = px.choropleth(data_frame=filtered_group_df,
                         geojson=hucs_rewound, color="Accidents_amount",
                         locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
@@ -103,8 +137,9 @@ def update_graph(option_selected, option_selected2):
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
-    text = 'The level of severity chosen was: {} and weather condition {}'.format(option_selected,
-                                                                                  option_selected2)
+    text = 'The level of severity chosen was: {}, weather condition {} and junction control {}.'.format(option_selected,
+                                                                                  option_selected2,
+                                                                                  option_selected3)
     # What you return: is going into the Output, vb: here 1 output so 1 argument return
     return text, fig
 
@@ -113,6 +148,7 @@ def update_graph(option_selected, option_selected2):
     [Output(component_id="output_container2", component_property="children"),
      Output(component_id="district_graph", component_property="figure")],
     [Input('choropleth', 'clickData')])
+
 def select_district(clickData):
     fig = {}
     district = None
