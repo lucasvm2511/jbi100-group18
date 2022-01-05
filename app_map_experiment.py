@@ -38,7 +38,8 @@ app.layout = html.Div([
     # Give title to website
     html.H1("Mapping of accidents in Great Britain", style={'text-align': 'center'}),
     # Make a checklist for severity; Create interactive menu Severity
-    html.P("Pick severity:"),
+
+    html.Div([html.H3('Filtering'),html.P("Pick severity:"),
     dcc.Dropdown(id="Casualty_Severity",
                  options=[{'label': 'All', 'value': 'All'},
                           {'label': 'Slight', 'value': severity[0]},
@@ -46,7 +47,7 @@ app.layout = html.Div([
                           {'label': 'Fatal', 'value': severity[2]}],
                  multi=False,
                  value='All',
-                 style={'width': '40%'}
+                 style={}
                  ),
     html.P("Pick weather conditions:"),
     dcc.Dropdown(id="weather_conditions",
@@ -59,14 +60,17 @@ app.layout = html.Div([
                           {'label': 'Snowing + high winds', 'value': 6}],
                  multi=False,
                  value='All',
-                 style={'width': '40%'}
+                 style={}
                  ),
+              dcc.Graph(id='district_graph', figure={})]
+             ,style={'width': '30%','display': 'inline-block'}),
+    html.Div(children=[
+        dcc.Graph(id="choropleth", figure={}, config={'scrollZoom':False})],style={'width': '70%','display': 'inline-block','vertical-align': 'top'}),
+
     html.Div(id='output_container', children=[]),
     html.Div(id='output_container2', children=[]),
-    dcc.Graph(id="choropleth", figure={}, config={'scrollZoom':False}),
-    dcc.Graph(id='district_graph', figure={}),
 
-])
+],style={'font-family': "verdana"})
 
 
 # Callback; inserts data in the dash components
@@ -95,7 +99,7 @@ def update_graph(option_selected, option_selected2):
                         geojson=hucs_rewound, color="Accidents_amount",
                         locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
                         projection="mercator", range_color=[0, filtered_group_df['Accidents_amount'].max()],
-                        color_continuous_scale=px.colors.sequential.Reds)
+                        color_continuous_scale=px.colors.sequential.Reds, height=650)
     fig.update_geos(fitbounds="locations", visible=False)
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
@@ -123,7 +127,7 @@ def select_district(clickData):
 
         df_selected_district_gr = df_both.groupby(['selected_district_bool','Speed_limit']).count()[['Accident_Index']].reset_index()
         df_selected_district_gr.loc[df_selected_district_gr['selected_district_bool'] != district, 'Accident_Index'] = df_selected_district_gr.loc[df_selected_district_gr['selected_district_bool'] != district, 'Accident_Index']/(309-1)
-        fig = px.bar(df_selected_district_gr, x='Speed_limit', y='Accident_Index', color = 'selected_district_bool', barmode="group")
+        fig = px.bar(df_selected_district_gr, x='Speed_limit', y='Accident_Index', color = 'selected_district_bool', barmode="group", title = str('Amount of accidents per speed limit in '+ district))
     return district, fig
 
 

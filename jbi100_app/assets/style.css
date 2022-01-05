@@ -46,3 +46,11 @@ h5 {
     padding-bottom: 7px;
     border-bottom:  1px solid #ccc;
 }
+
+h1 {
+    background-color: #f9f9f9;
+    color: #333333;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    margin: 0px;
+}
