@@ -34,7 +34,7 @@
 33,Hertsmere
 38,Epsom and Ewell
 40,Spelthorne
-57,London Airport (Heathrow)
+57,Hillingdon
 60,Allerdale
 61,Barrow-in-Furness
 62,Carlisle
@@ -57,7 +57,7 @@
 85,Wyre
 90,Knowsley
 91,Liverpool
-92,St. Helens
+92,Saint Helens
 93,Sefton
 95,Wirral
 100,Bolton
@@ -70,37 +70,37 @@
 110,Tameside
 112,Trafford
 114,Wigan
-120,Chester
-121,Congleton
-122,Crewe and Nantwich
-123,Ellesmere Port and Neston
+120,Cheshire East
+121,Cheshire East
+122,Cheshire East
+123,Cheshire West and Chester
 124,Halton
-126,Macclesfield
-127,Vale Royal
+126,Cheshire East
+127,Cheshire West and Chester
 128,Warrington
 129,Cheshire East
 130,Cheshire West and Chester
 139,Northumberland
-140,Alnwick
-141,Berwick-upon-Tweed
-142,Blyth Valley
-143,Castle Morpeth
-144,Tynedale
-145,Wansbeck
+140,Northumberland
+141,Northumberland
+142,Northumberland
+143,Northumberland
+144,Northumberland
+145,Northumberland
 146,Gateshead
 147,Newcastle upon Tyne
 148,North Tyneside
 149,South Tyneside
 150,Sunderland
-160,Chester-le-Street
+160,Durham
 161,Darlington
-162,Derwentside
+162,Durham
 163,Durham
-164,Easington
-165,Sedgefield
-166,Teesdale
-168,Wear Valley
-169,County Durham
+164,Durham
+165,Durham
+166,Durham
+168,Durham
+169,Durham
 180,Craven
 181,Hambleton
 182,Harrogate
@@ -118,7 +118,7 @@
 211,Doncaster
 213,Rotherham
 215,Sheffield
-228,"Kingston upon Hull, City of"
+228,Kingston upon Hull
 231,East Riding of Yorkshire
 232,North Lincolnshire
 233,North East Lincolnshire
@@ -141,18 +141,18 @@
 276,Worcester
 277,Wychavon
 278,Wyre Forest
-279,Bridgnorth
-280,North Shropshire
-281,Oswestry
-282,Shrewsbury and Atcham
-283,South Shropshire
+279,Shropshire
+280,Shropshire
+281,Shropshire
+282,Shropshire
+283,Shropshire
 284,Telford and Wrekin
-285,"Herefordshire, County of "
+285,Herefordshire
 286,Shropshire
 290,North Warwickshire
 291,Nuneaton and Bedworth
-292,Rugby 
-293,Stratford-upon-Avon
+292,Rugby
+293,Stratford-on-Avon
 294,Warwick
 300,Birmingham
 302,Coventry
@@ -215,22 +215,22 @@
 406,South Norfolk
 407,King's Lynn and West Norfolk
 410,Babergh
-411,Forest Heath
+411,Hillingdon
 412,Ipswich
 413,Mid Suffolk
-414,St. Edmundsbury
-415,Suffolk Coastal
+414,Saint Edmundsbury
+415,Suffolk coastal
 416,Waveney
 420,Bedford
 421,Luton
-422,Mid Bedfordshire
-423,South Bedfordshire
+422,Bedford
+423,Central Bedfordshire
 424,Central Bedfordshire
 430,Broxbourne
 431,Dacorum
 432,East Hertfordshire
 433,North Hertfordshire
-434,St. Albans
+434,Saint Albans
 435,Stevenage
 436,Three Rivers
 437,Watford
@@ -275,7 +275,7 @@
 497,East Hampshire
 498,Portsmouth
 499,Rushmoor
-500,Southampton 
+500,Southampton
 501,Test Valley
 502,Winchester
 505,Isle of Wight
@@ -314,7 +314,7 @@
 563,Mid Sussex
 564,Worthing
 565,Brighton and Hove
-570,City of London
+570,London
 580,East Devon
 581,Exeter
 582,North Devon
@@ -325,14 +325,14 @@
 587,Torbay
 588,Torridge
 589,West Devon
-590,Caradon
-591,Carrick
-592,Kerrier
-593,North Cornwall
-594,Penwith
-595,Restormel
+590,Cornwall
+591,Cornwall
+592,Cornwall
+593,Cornwall
+594,Cornwall
+595,Cornwall
 596,Cornwall
-601,"Bristol, City of"
+601,Bristol
 605,North Somerset
 606,Mendip
 607,Sedgemoor
@@ -347,11 +347,11 @@
 623,Gloucester
 624,Stroud
 625,Tewkesbury
-630,Kennet
-631,North Wiltshire
-632,Salisbury
+630,Clackmannanshire
+631,Wiltshire
+632,Wiltshire
 633,Swindon
-634,West Wiltshire
+634,Wiltshire
 635,Wiltshire
 640,Bournemouth
 641,Christchurch
@@ -361,7 +361,7 @@
 645,West Dorset
 646,Weymouth and Portland
 647,East Dorset
-720,Isle of Anglesey
+720,Anglesey
 721,Conwy
 722,Gwynedd
 723,Denbighshire
@@ -378,12 +378,12 @@
 743,Neath Port Talbot
 744,"Rhondda, Cynon, Taff"
 745,Swansea
-746,The Vale of Glamorgan
+746,Vale of Glamorgan
 750,Ceredigion
 751,Carmarthenshire
 752,Pembrokeshire
 753,Powys
-910,Aberdeen City
+910,Aberdeen
 911,Aberdeenshire
 912,Angus
 913,Argyll and Bute
@@ -391,15 +391,15 @@
 915,Clackmannanshire
 916,West Dunbartonshire
 917,Dumfries and Galloway
-918,Dundee City
+918,Dundee
 919,East Ayrshire
 920,East Dunbartonshire
 921,East Lothian
 922,East Renfrewshire
-923,"Edinburgh, City of"
+923,Edinburgh
 924,Falkirk
 925,Fife
-926,Glasgow City
+926,Glasgow
 927,Highland
 928,Inverclyde
 929,Midlothian
@@ -407,11 +407,11 @@
 931,North Ayrshire
 932,North Lanarkshire
 933,Orkney Islands
-934,Perth and Kinross
+934,Perthshire and Kinross
 935,Renfrewshire
 936,Shetland Islands
 937,South Ayrshire
 938,South Lanarkshire
 939,Stirling
 940,West Lothian
-941,Western Isles
+941,Eilean Siar

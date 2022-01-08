@@ -1,0 +1,417 @@
+﻿Geojson,dataframe,population
+Barnsley,Westminster,Durham
+Bath and North East Somerset,Camden,Darlington
+Bedford,Islington,Hartlepool
+Birmingham,Hackney,Middlesbrough
+Blackburn with Darwen,Tower Hamlets,Northumberland
+Blackpool,Greenwich,Redcar and Cleveland
+Bolton,Lewisham,Stockton-on-Tees
+Bournemouth,Southwark,Gateshead
+Bracknell Forest,Lambeth,Newcastle upon Tyne
+Bradford,Wandsworth,North Tyneside
+Brighton and Hove,Hammersmith and Fulham,South Tyneside
+Bristol,Kensington and Chelsea,Sunderland
+Aylesbury Vale,Waltham Forest,Blackburn with Darwen
+Chiltern,Redbridge,Blackpool
+South Bucks,Havering,Cheshire East
+Wycombe,Barking and Dagenham,Cheshire West and Chester
+Bury,Newham,Halton
+Calderdale,Bexley,Warrington
+Cambridge,Bromley,Allerdale
+East Cambridgeshire,Croydon,Barrow-in-Furness
+Fenland,Sutton,Carlisle
+Huntingdonshire,Merton,Copeland
+King's Lynn and West Norfolk,Kingston upon Thames,Eden
+South Cambridgeshire,Richmond upon Thames,South Lakeland
+Central Bedfordshire,Hounslow,Bolton
+Cheshire East,Hillingdon,Bury
+Cheshire West and Chester,Ealing,Manchester
+Cornwall,Brent,Oldham
+Coventry,Harrow,Rochdale
+Allerdale,Barnet,Salford
+Barrow-in-Furness,Haringey,Stockport
+Carlisle,Enfield,Tameside
+Copeland,Hertsmere,Trafford
+Eden,Epsom and Ewell,Wigan
+South Lakeland,Spelthorne,Burnley
+Darlington,Hillingdon,Chorley
+Derby,Allerdale,Fylde
+Amber Valley,Barrow-in-Furness,Hyndburn
+Bolsover,Carlisle,Lancaster
+Chesterfield,Copeland,Pendle
+Derbyshire Dales,Eden,Preston
+Erewash,South Lakeland,Ribble Valley
+High Peak,Blackburn with Darwen,Rossendale
+North East Derbyshire,Blackpool,South Ribble
+South Derbyshire,Burnley,West Lancashire
+East Devon,Chorley,Wyre
+Exeter,Fylde,Knowsley
+Mid Devon,Hyndburn,Liverpool
+North Devon,Lancaster,Sefton
+South Hams,Pendle,Saint Helens
+Teignbridge,Preston,Wirral
+Torridge,Ribble Valley,East Riding of Yorkshire
+West Devon,Rossendale,Kingston upon Hull
+Doncaster,South Ribble,North East Lincolnshire
+Christchurch,West Lancashire,North Lincolnshire
+East Dorset,Wyre,York
+North Dorset,Knowsley,Craven
+Purbeck,Liverpool,Hambleton
+West Dorset,Saint Helens,Harrogate
+Weymouth and Portland,Sefton,Richmondshire
+Dudley,Wirral,Ryedale
+Durham,Bolton,Scarborough
+East Riding of Yorkshire,Bury,Selby
+Eastbourne,Manchester,Barnsley
+Hastings,Oldham,Doncaster
+Lewes,Rochdale,Rotherham
+Rother,Salford,Sheffield
+Wealden,Stockport,Bradford
+Basildon,Tameside,Calderdale
+Braintree,Trafford,Kirklees
+Brentwood,Wigan,Leeds
+Castle Point,Cheshire East,Wakefield
+Chelmsford,Cheshire East,Derby
+Colchester,Cheshire East,Leicester
+Epping Forest,Cheshire West and Chester,Nottingham
+Harlow,Halton,Rutland
+Maldon,Cheshire East,Amber Valley
+Rochford,Cheshire West and Chester,Bolsover
+Tendring,Warrington,Chesterfield
+Uttlesford,Cheshire East,Derbyshire Dales
+Gateshead,Cheshire West and Chester,Erewash
+Cheltenham,Northumberland,High Peak
+Cotswold,Northumberland,North East Derbyshire
+Forest of Dean,Northumberland,South Derbyshire
+Gloucester,Northumberland,Blaby
+Stroud,Northumberland,Charnwood
+Tewkesbury,Northumberland,Harborough
+Barking and Dagenham,Northumberland,Hinckley and Bosworth
+Barnet,Gateshead,Melton
+Bexley,Newcastle upon Tyne,North West Leicestershire
+Brent,North Tyneside,Oadby and Wigston
+Bromley,South Tyneside,Boston
+Camden,Sunderland,East Lindsey
+Croydon,Durham,Lincoln
+Ealing,Darlington,North Kesteven
+Enfield,Durham,South Holland
+Greenwich,Durham,South Kesteven
+Hackney,Durham,West Lindsey
+Hammersmith and Fulham,Durham,Corby
+Haringey,Durham,Daventry
+Harrow,Durham,East Northamptonshire
+Havering,Durham,Kettering
+Hillingdon,Craven,Northampton
+Hounslow,Hambleton,South Northamptonshire
+Islington,Harrogate,Wellingborough
+Kensington and Chelsea,Richmondshire,Ashfield
+Kingston upon Thames,Ryedale,Bassetlaw
+Lambeth,Scarborough,Broxtowe
+Lewisham,Selby,Gedling
+London,York,Mansfield
+Merton,Bradford,Newark and Sherwood
+Newham,Calderdale,Rushcliffe
+Redbridge,Kirklees,Herefordshire
+Richmond upon Thames,Leeds,Shropshire
+Southwark,Wakefield,Stoke-on-Trent
+Sutton,Barnsley,Telford and Wrekin
+Tower Hamlets,Doncaster,Cannock Chase
+Waltham Forest,Rotherham,East Staffordshire
+Wandsworth,Sheffield,Lichfield
+Westminster,Kingston upon Hull,Newcastle-under-Lyme
+Halton,East Riding of Yorkshire,South Staffordshire
+Basingstoke and Deane,North Lincolnshire,Stafford
+East Hampshire,North East Lincolnshire,Staffordshire Moorlands
+Eastleigh,Hartlepool,Tamworth
+Fareham,Redcar and Cleveland,North Warwickshire
+Gosport,Middlesbrough,Nuneaton and Bedworth
+Hart,Stockton-on-Tees,Rugby
+Havant,Cannock Chase,Stratford-on-Avon
+New Forest,East Staffordshire,Warwick
+Rushmoor,Lichfield,Birmingham
+Test Valley,Newcastle-under-Lyme,Coventry
+Winchester,South Staffordshire,Dudley
+Hartlepool,Stafford,Sandwell
+Herefordshire,Staffordshire Moorlands,Solihull
+Broxbourne,Stoke-on-Trent,Walsall
+Dacorum,Tamworth,Wolverhampton
+East Hertfordshire,Bromsgrove,Bromsgrove
+Hertsmere,Malvern Hills,Malvern Hills
+North Hertfordshire,Redditch,Redditch
+Saint Albans,Worcester,Worcester
+Stevenage,Wychavon,Wychavon
+Three Rivers,Wyre Forest,Wyre Forest
+Watford,Shropshire,Bedford
+Welwyn Hatfield,Shropshire,Central Bedfordshire
+Isle of Wight,Shropshire,Luton
+Isles of Scilly,Shropshire,Peterborough
+Ashford,Shropshire,Southend-on-Sea
+Canterbury,Telford and Wrekin,Thurrock
+Dartford,Herefordshire,Cambridge
+Dover,Shropshire,East Cambridgeshire
+Gravesham,North Warwickshire,Fenland
+Maidstone,Nuneaton and Bedworth,Huntingdonshire
+Sevenoaks,Rugby,South Cambridgeshire
+Shepway,Stratford-on-Avon,Basildon
+Swale,Warwick,Braintree
+Thanet,Birmingham,Brentwood
+Tonbridge and Malling,Coventry,Castle Point
+Tunbridge Wells,Dudley,Chelmsford
+Kingston upon Hull,Sandwell,Colchester
+Kirklees,Solihull,Epping Forest
+Knowsley,Walsall,Harlow
+Burnley,Wolverhampton,Maldon
+Chorley,Amber Valley,Rochford
+Fylde,Bolsover,Tendring
+Hyndburn,Chesterfield,Uttlesford
+Lancaster,Derby,Broxbourne
+Pendle,Erewash,Dacorum
+Preston,High Peak,East Hertfordshire
+Ribble Valley,North East Derbyshire,Hertsmere
+Rossendale,South Derbyshire,North Hertfordshire
+South Ribble,Derbyshire Dales,Saint Albans
+West Lancashire,Ashfield,Stevenage
+Wyre,Bassetlaw,Three Rivers
+Leeds,Broxtowe,Watford
+Leicester,Gedling,Welwyn Hatfield
+Blaby,Mansfield,Breckland
+Charnwood,Newark and Sherwood,Broadland
+Harborough,Nottingham,Great Yarmouth
+Hinckley and Bosworth,Rushcliffe,King's Lynn and West Norfolk
+Melton,Boston,North Norfolk
+North West Leicestershire,East Lindsey,Norwich
+Oadby and Wigston,Lincoln,South Norfolk
+Boston,North Kesteven,Babergh
+East Lindsey,South Holland,Suffolk coastal
+Lincoln,South Kesteven,Ipswich
+North East Lincolnshire,West Lindsey,Mid Suffolk
+North Kesteven,Blaby,Camden
+South Holland,Hinckley and Bosworth,London
+South Kesteven,Charnwood,Hackney
+West Lindsey,Harborough,Hammersmith and Fulham
+Luton,Leicester,Haringey
+Manchester,Melton,Islington
+Medway,North West Leicestershire,Kensington and Chelsea
+Middlesbrough,Oadby and Wigston,Lambeth
+Milton Keynes,Rutland,Lewisham
+Newcastle upon Tyne,Corby,Newham
+Breckland,Daventry,Southwark
+Broadland,East Northamptonshire,Tower Hamlets
+Great Yarmouth,Kettering,Wandsworth
+North Norfolk,Northampton,Westminster
+Norwich,South Northamptonshire,Barking and Dagenham
+South Norfolk,Wellingborough,Barnet
+North Lincolnshire,Cambridge,Bexley
+North Somerset,East Cambridgeshire,Brent
+North Tyneside,Fenland,Bromley
+Craven,Huntingdonshire,Croydon
+Hambleton,Peterborough,Ealing
+Harrogate,South Cambridgeshire,Enfield
+Richmondshire,Breckland,Greenwich
+Ryedale,Broadland,Harrow
+Scarborough,Great Yarmouth,Havering
+Selby,Norwich,Hillingdon
+Corby,North Norfolk,Hounslow
+Daventry,South Norfolk,Kingston upon Thames
+East Northamptonshire,King's Lynn and West Norfolk,Merton
+Kettering,Babergh,Redbridge
+Northampton,Hillingdon,Richmond upon Thames
+South Northamptonshire,Ipswich,Sutton
+Wellingborough,Mid Suffolk,Waltham Forest
+Northumberland,Saint Edmundsbury,Bracknell Forest
+Nottingham,Suffolk coastal,Brighton and Hove
+Ashfield,Waveney,Isle of Wight
+Bassetlaw,Bedford,Medway
+Broxtowe,Luton,Milton Keynes
+Gedling,Bedford,Portsmouth
+Mansfield,Central Bedfordshire,Reading
+Newark and Sherwood,Central Bedfordshire,Slough
+Rushcliffe,Broxbourne,Southampton
+Oldham,Dacorum,West Berkshire
+Cherwell,East Hertfordshire,Windsor and Maidenhead
+Oxford,North Hertfordshire,Wokingham
+South Oxfordshire,Saint Albans,Aylesbury Vale
+Vale of White Horse,Stevenage,Eastbourne
+West Oxfordshire,Three Rivers,Hastings
+Peterborough,Watford,Lewes
+Plymouth,Welwyn Hatfield,Rother
+Poole,Basildon,Wealden
+Portsmouth,Braintree,Basingstoke and Deane
+Reading,Brentwood,East Hampshire
+Redcar and Cleveland,Castle Point,Eastleigh
+Rochdale,Chelmsford,Fareham
+Rotherham,Colchester,Gosport
+Rutland,Epping Forest,Hart
+Saint Helens,Harlow,Havant
+Salford,Maldon,New Forest
+Sandwell,Rochford,Rushmoor
+Liverpool,Southend-on-Sea,Test Valley
+Sefton,Tendring,Winchester
+Sheffield,Thurrock,Ashford
+Shropshire,Uttlesford,Canterbury
+Slough,Bracknell Forest,Dartford
+Solihull,West Berkshire,Dover
+Mendip,Reading,Shepway
+Sedgemoor,Slough,Gravesham
+South Somerset,Windsor and Maidenhead,Maidstone
+Taunton Deane,Wokingham,Sevenoaks
+West Somerset,Aylesbury Vale,Swale
+South Gloucestershire,South Bucks,Thanet
+South Tyneside,Chiltern,Tonbridge and Malling
+Southampton,Milton Keynes,Tunbridge Wells
+Southend-on-Sea,Wycombe,Cherwell
+Cannock Chase,Cherwell,Oxford
+East Staffordshire,Oxford,South Oxfordshire
+Lichfield,Vale of White Horse,Vale of White Horse
+Newcastle-under-Lyme,South Oxfordshire,West Oxfordshire
+South Staffordshire,West Oxfordshire,Elmbridge
+Stafford,Basingstoke and Deane,Epsom and Ewell
+Staffordshire Moorlands,Eastleigh,Guildford
+Tamworth,Fareham,Mole Valley
+Stockport,Gosport,Reigate and Banstead
+Stockton-on-Tees,Hart,Runnymede
+Stoke-on-Trent,Havant,Spelthorne
+Babergh,New Forest,Surrey Heath
+Forest Heath,East Hampshire,Tandridge
+Ipswich,Portsmouth,Waverley
+Mid Suffolk,Rushmoor,Woking
+Saint Edmundsbury,Southampton,Adur
+Suffolk coastal,Test Valley,Arun
+Waveney,Winchester,Chichester
+Sunderland,Isle of Wight,Crawley
+Elmbridge,Elmbridge,Horsham
+Epsom and Ewell,Guildford,Mid Sussex
+Guildford,Mole Valley,Worthing
+Mole Valley,Reigate and Banstead,Bath and North East Somerset
+Reigate and Banstead,Runnymede,Bournemouth
+Runnymede,Surrey Heath,Bristol
+Spelthorne,Tandridge,Cornwall
+Surrey Heath,Waverley,North Dorset
+Tandridge,Woking,North Somerset
+Waverley,Ashford,Plymouth
+Woking,Canterbury,South Gloucestershire
+Swindon,Dartford,Swindon
+Tameside,Dover,Torbay
+Telford and Wrekin,Gravesham,Wiltshire
+Thurrock,Maidstone,East Devon
+Torbay,Sevenoaks,Exeter
+Trafford,Shepway,Mid Devon
+Wakefield,Swale,North Devon
+Walsall,Thanet,South Hams
+Warrington,Tonbridge and Malling,Teignbridge
+North Warwickshire,Tunbridge Wells,Torridge
+Nuneaton and Bedworth,Medway,West Devon
+Rugby,Eastbourne,Cheltenham
+Stratford-on-Avon,Hastings,Cotswold
+Warwick,Lewes,Forest of Dean
+West Berkshire,Rother,Gloucester
+Adur,Wealden,Stroud
+Arun,Adur,Tewkesbury
+Chichester,Arun,Mendip
+Crawley,Chichester,Sedgemoor
+Horsham,Crawley,West Somerset
+Mid Sussex,Horsham,South Somerset
+Worthing,Mid Sussex,Anglesey
+Wigan,Worthing,Gwynedd
+Wiltshire,Brighton and Hove,Conwy
+Windsor and Maidenhead,London,Denbighshire
+Wirral,East Devon,Flintshire
+Wokingham,Exeter,Wrexham
+Wolverhampton,North Devon,Powys
+Bromsgrove,Plymouth,Ceredigion
+Malvern Hills,South Hams,Pembrokeshire
+Redditch,Teignbridge,Carmarthenshire
+Worcester,Mid Devon,Swansea
+Wychavon,Torbay,Neath Port Talbot
+Wyre Forest,Torridge,Bridgend
+York,West Devon,Vale of Glamorgan
+Aberdeen,Cornwall,Cardiff
+Aberdeenshire,Cornwall,Merthyr Tydfil
+Angus,Cornwall,Caerphilly
+Argyll and Bute,Cornwall,Blaenau Gwent
+Clackmannanshire,Cornwall,Torfaen
+Dumfries and Galloway,Cornwall,Monmouthshire
+Dundee,Cornwall,Newport
+East Ayrshire,Bristol,Aberdeen
+East Dunbartonshire,North Somerset,Aberdeenshire
+East Lothian,Mendip,Angus
+East Renfrewshire,Sedgemoor,Argyll and Bute
+Edinburgh,Taunton Deane,Edinburgh
+Eilean Siar,West Somerset,Clackmannanshire
+Falkirk,South Somerset,Dumfries and Galloway
+Fife,Bath and North East Somerset,Dundee
+Glasgow,South Gloucestershire,East Ayrshire
+Highland,Cheltenham,East Dunbartonshire
+Inverclyde,Cotswold,East Lothian
+Midlothian,Forest of Dean,East Renfrewshire
+Moray,Gloucester,Falkirk
+North Ayrshire,Stroud,Fife
+North Lanarkshire,Tewkesbury,Glasgow
+Orkney Islands,Clackmannanshire,Highland
+Perthshire and Kinross,Wiltshire,Inverclyde
+Renfrewshire,Wiltshire,Midlothian
+Scottish Borders,Swindon,Moray
+Shetland Islands,Wiltshire,Eilean Siar
+South Ayrshire,Wiltshire,North Ayrshire
+South Lanarkshire,Bournemouth,North Lanarkshire
+Stirling,Christchurch,Orkney Islands
+West Dunbartonshire,North Dorset,Perthshire and Kinross
+West Lothian,Poole,Renfrewshire
+Anglesey,Purbeck,Scottish Borders
+Blaenau Gwent,West Dorset,Shetland Islands
+Bridgend,Weymouth and Portland,South Ayrshire
+Caerphilly,East Dorset,South Lanarkshire
+Cardiff,Anglesey,Stirling
+Carmarthenshire,Conwy,West Dunbartonshire
+Ceredigion,Gwynedd,West Lothian
+Conwy,Denbighshire,East Dorset
+Denbighshire,Flintshire,West Dorset
+Flintshire,Wrexham,Taunton Deane
+Gwynedd,Blaenau Gwent,Christchurch
+Merthyr Tydfil,Caerphilly,Poole
+Monmouthshire,Monmouthshire,Chiltern
+Neath Port Talbot,Newport,Purbeck
+Newport,Torfaen,"Rhondda, Cynon, Taff"
+Pembrokeshire,Bridgend,Waveney
+Powys,Cardiff,South Bucks
+"Rhondda, Cynon, Taff",Merthyr Tydfil,Weymouth and Portland
+Swansea,Neath Port Talbot,Saint Edmundsbury
+Torfaen,"Rhondda, Cynon, Taff",Wycombe
+Vale of Glamorgan,Swansea,
+Wrexham,Vale of Glamorgan,
+,Ceredigion,
+,Carmarthenshire,
+,Pembrokeshire,
+,Powys,
+,Aberdeen,
+,Aberdeenshire,
+,Angus,
+,Argyll and Bute,
+,Scottish Borders,
+,Clackmannanshire,
+,West Dunbartonshire,
+,Dumfries and Galloway,
+,Dundee,
+,East Ayrshire,
+,East Dunbartonshire,
+,East Lothian,
+,East Renfrewshire,
+,Edinburgh,
+,Falkirk,
+,Fife,
+,Glasgow,
+,Highland,
+,Inverclyde,
+,Midlothian,
+,Moray,
+,North Ayrshire,
+,North Lanarkshire,
+,Orkney Islands,
+,Perthshire and Kinross,
+,Renfrewshire,
+,Shetland Islands,
+,South Ayrshire,
+,South Lanarkshire,
+,Stirling,
+,West Lothian,
+,Eilean Siar,
