@@ -167,6 +167,12 @@ def select_district(clickData):
         age_hist = px.histogram(df_selected_district, x='Age_of_Driver',
                                 category_orders={"Age_of_Driver": [*range(100), '?']},
                                 title=str('Driver age histogram in ' + district))
+    else:
+        df_gb = road_df.groupby(['Speed_limit']).count()[['Accident_Index']].reset_index()
+        fig = px.bar(df_gb, x='Speed_limit', y='Accident_Index', title=str('Amount of accidents per speed limit in Great Britain'))
+        age_hist = px.histogram(road_df, x='Age_of_Driver',
+                                category_orders={"Age_of_Driver": [*range(100), '?']},
+                                title=str('Driver age histogram in Great Britain'))
     return district, fig, age_hist
 
 
