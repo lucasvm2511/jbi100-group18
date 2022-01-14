@@ -21,14 +21,16 @@ population_df = pd.read_csv('population_districts.csv')
 population_df.set_index('district',inplace=True)
 
 # Manipulate dataframe to get the data needed
+population_df['population'] = population_df['population'].str.replace(',', '')
+population_df['population'] = population_df['population'].astype(int)
 my_map = names_df.to_dict()
 my_map_population = population_df.to_dict()
 road_df['Local_Authority_(District)'].replace(my_map['district_name'],
                                               inplace=True)  # replace district id with district name
-road_df['Population']=road_df['Local_Authority_(District)']
+road_df['Population'] = road_df['Local_Authority_(District)']
 road_df['Population'].replace(my_map_population['population'],
                                               inplace=True)  # replace district name with district population
-
+road_df['relative_pop'] = (road_df['Population'] / 64812699) * 100
 # Read in geojson
 hucs = gpd.read_file('geojson4.json')
 
