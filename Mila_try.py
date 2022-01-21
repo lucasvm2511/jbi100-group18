@@ -144,9 +144,12 @@ def update_choropleth(option_selected, option_selected2, option_selected3):
      Output(component_id="district_graph", component_property="figure"),
      Output(component_id="age_hist", component_property="figure")],
     [Input(component_id='choropleth', component_property='clickData'),
+     Input(component_id='Casualty_Severity', component_property="value"),
+     Input(component_id="weather_conditions", component_property="value"),
+     Input(component_id="junction_control", component_property="value")
      ])
 # One argument in def() so 1 input in callback
-def select_district_and_update_age_speedlimit(clickData):
+def select_district_and_update_age_speedlimit(clickData, option_selected, option_selected2, option_selected3):
     fig = {}
     district = None
     if clickData is not None:
@@ -172,13 +175,49 @@ def select_district_and_update_age_speedlimit(clickData):
     else:
         # If no district is clicked
         df_gb = road_df.groupby(['Speed_limit', 'Casualty_Severity', 'Weather_Conditions', 'Junction_Control']).count()[['Accident_Index']].reset_index()
+        # Include dropdown interaction for bar speed limit
+        if option_selected == 'All':
+            filtered_df_casualty = df_gb  # if all is selected, do not filter
+        else:
+            filtered_df_casualty = df_gb[(df_gb['Casualty_Severity'] == option_selected)]
+        if option_selected2 == 'All':
+            filtered_df_weather = filtered_df_casualty  # if all is selected, do not filter
+        else:
+            filtered_df_weather = filtered_df_casualty[filtered_df_casualty['Weather_Conditions'] == option_selected2]
+        filtered_df_weather['Accidents_amount'] = filtered_df_weather['Accident_Index']
 
-        fig = px.bar(df_gb, x='Speed_limit', y='Accident_Index', title=str('Amount of accidents per speed limit in Great Britain'))
+        if option_selected3 == 'All':
+            filtered_df_junction = df_gb  # if all is selected, do not filter
+        else:
+            filtered_df_junction = df_gb[df_gb['Junction_Control'] == option_selected3]
+        filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
 
-        age_hist = px.histogram(road_df, x='Age_of_Driver',
+        filtered_group_df = filtered_df_junction
+        fig = px.bar(filtered_group_df, x='Speed_limit', y='Accident_Index', title=str('Amount of accidents per speed limit in Great Britain'))
+
+    # # Include dropdown interaction for age graph
+    #     if option_selected == 'All':
+    #         filtered_df_casualty = road_df  # if all is selected, do not filter
+    #     else:
+    #         filtered_df_casualty = road_df[(road_df['Casualty_Severity'] == option_selected)]
+    #     if option_selected2 == 'All':
+    #         filtered_df_weather = filtered_df_casualty  # if all is selected, do not filter
+    #     else:
+    #         filtered_df_weather = filtered_df_casualty[filtered_df_casualty['Weather_Conditions'] == option_selected2]
+    #     filtered_df_weather['Accidents_amount'] = filtered_df_weather['Accident_Index']
+    #     if option_selected3 == 'All':
+    #         filtered_df_junction = road_df  # if all is selected, do not filter
+    #     else:
+    #         filtered_df_junction = road_df[road_df['Junction_Control'] == option_selected3]
+    #     filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
+    #
+    #     filtered_group_df = filtered_df_junction
+        age_hist = px.histogram(filtered_group_df, x='Age_of_Driver',
                                 category_orders={"Age_of_Driver": [*range(100), '?']},
                                 title=str('Driver age histogram in Great Britain'))
     return district, fig, age_hist
 
 app.run_server(debug=True)
 # test
+
+
