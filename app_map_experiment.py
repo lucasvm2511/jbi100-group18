@@ -12,7 +12,9 @@ import json
 app = dash.Dash(__name__)
 # --------------------------------------------------------------------
 # Load dataframe of accidents
+px.set_mapbox_access_token('pk.eyJ1IjoibHVjYXN2bSIsImEiOiJja3lsYmg4aTMwNHY5Mm9wYmxrMGNmeTdmIn0.zPxtZHL_qWWh13-Np-zmog') #set mapbox token
 road_df = pd.read_csv('dataset.csv')
+#road_df = road_df[['age','']]
 names_df = pd.read_csv('names.csv')
 names_df.set_index('district_id', inplace=True)
 population_df = pd.read_csv('population_districts.csv')
@@ -78,6 +80,7 @@ app.layout = html.Div([
               dcc.Graph(id='district_graph', figure={})], style={'width': '30%', 'display': 'inline-block'}),
     html.Div(children=[
         dcc.Graph(id="choropleth", figure={}, config={'scrollZoom': False}),
+        dcc.Graph(id="density_map", figure={}, config={'scrollZoom': True}),
         html.Div(id='output_container', children=[]),
         html.Div(id='output_container2', children=[]),
         html.Div(id='output_container3', children=[])],
@@ -87,7 +90,8 @@ app.layout = html.Div([
 # Callback; Connect the plotly graphs with dash components; inserts data in the dash components
 @app.callback(
     [Output(component_id="output_container", component_property="children"),
-     Output(component_id="choropleth", component_property="figure"), ],
+     Output(component_id="choropleth", component_property="figure"),
+     Output(component_id="density_map", component_property="figure"),],
     [Input(component_id="Casualty_Severity", component_property="value"),
      Input(component_id="weather_conditions", component_property="value"),
      Input(component_id="junction_control", component_property="value")]
@@ -110,18 +114,23 @@ def update_graph(option_selected, option_selected2, option_selected3):
     filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
     filtered_group_df = filtered_df_junction.groupby('Local_Authority_(District)').count()[
         'Accidents_amount'].to_frame().reset_index()
-    fig = px.choropleth(data_frame=filtered_group_df,
+    fig_choropleth = px.choropleth(data_frame=filtered_group_df,
                         geojson=hucs_rewound, color="Accidents_amount",
                         locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
                         projection="mercator", range_color=[0, filtered_group_df['Accidents_amount'].max()],
                         color_continuous_scale=px.colors.sequential.Reds, height=650)
-    fig.update_geos(fitbounds="locations", visible=False)
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig_density = px.density_mapbox(filtered_df_junction, lat='Latitude', lon='Longitude', radius=3,
+                            center=dict(lat=54.328506, lon=-2.744644), zoom=4,
+                            mapbox_style='mapbox://styles/lucasvm/ckypzzw6kq7i815pcy5ig2slk',
+                            color_continuous_scale=px.colors.sequential.OrRd)
+
+    fig_choropleth.update_geos(fitbounds="locations", visible=False)
+    fig_choropleth.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     text = 'The level of severity chosen was: {}, weather condition {} and junction control {}.'.format(option_selected,
                                                                                                         option_selected2,
                                                                                                         option_selected3)
     # What you return: is going into the Output, vb: here 1 output so 1 argument return
-    return text, fig
+    return text, fig_choropleth, fig_density
 @app.callback(
     [Output(component_id="output_container2", component_property="children"),
      Output(component_id="district_graph", component_property="figure"),
