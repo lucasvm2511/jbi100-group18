@@ -14,7 +14,31 @@ app = dash.Dash(__name__)
 # Load dataframe of accidents
 px.set_mapbox_access_token('pk.eyJ1IjoibHVjYXN2bSIsImEiOiJja3lsYmg4aTMwNHY5Mm9wYmxrMGNmeTdmIn0.zPxtZHL_qWWh13-Np-zmog') #set mapbox token
 road_df = pd.read_csv('dataset.csv')
-#road_df = road_df[['age','']]
+road_df.drop(inplace=True, columns=['Location_Easting_OSGR', 'Location_Northing_OSGR','Police_Force',
+       'Number_of_Vehicles', 'Number_of_Casualties', 'Local_Authority_(Highway)',
+       '1st_Road_Class', '1st_Road_Number', 'Road_Type',
+       'Junction_Detail', '2nd_Road_Class',
+       '2nd_Road_Number', 'Pedestrian_Crossing-Human_Control',
+       'Pedestrian_Crossing-Physical_Facilities', 'Light_Conditions',
+       'Road_Surface_Conditions',
+       'Special_Conditions_at_Site', 'Carriageway_Hazards',
+       'Urban_or_Rural_Area', 'Did_Police_Officer_Attend_Scene_of_Accident',
+       'LSOA_of_Accident_Location', 'Vehicle_Reference_df_res',
+       'Casualty_Reference', 'Casualty_Class', 'Sex_of_Casualty',
+       'Age_of_Casualty', 'Age_Band_of_Casualty',
+       'Pedestrian_Location', 'Pedestrian_Movement', 'Car_Passenger',
+       'Bus_or_Coach_Passenger', 'Pedestrian_Road_Maintenance_Worker',
+       'Casualty_Type', 'Casualty_Home_Area_Type', 'Casualty_IMD_Decile',
+       'Vehicle_Reference_df', 'Vehicle_Type', 'Towing_and_Articulation',
+       'Vehicle_Manoeuvre', 'Vehicle_Location-Restricted_Lane',
+       'Junction_Location', 'Skidding_and_Overturning',
+       'Hit_Object_in_Carriageway', 'Vehicle_Leaving_Carriageway',
+       'Hit_Object_off_Carriageway', '1st_Point_of_Impact',
+       'Was_Vehicle_Left_Hand_Drive?', 'Journey_Purpose_of_Driver',
+       'Sex_of_Driver', 'Age_Band_of_Driver',
+       'Engine_Capacity_(CC)', 'Propulsion_Code', 'Age_of_Vehicle',
+       'Driver_Home_Area_Type'])
+#road_df = road_df[['Age_of_Driver','Casualty_Severity','Weather_Conditions',"Speed_limit",'Local_Authority_(District)',"Latitude","Longitude","Age_of_Driver","Accident_Index"]]
 names_df = pd.read_csv('names.csv')
 names_df.set_index('district_id', inplace=True)
 population_df = pd.read_csv('population_districts.csv')
@@ -79,6 +103,9 @@ app.layout = html.Div([
               dcc.Graph(id='age_hist', figure={}),
               dcc.Graph(id='district_graph', figure={})], style={'width': '30%', 'display': 'inline-block'}),
     html.Div(children=[
+        html.Button('Show density heatmap', id='btn_1', n_clicks=0),
+        html.Button('Show district heatmap', id='btn_2', n_clicks=0),
+        html.Button('Set colors', id='btn_3', n_clicks=0),
         dcc.Graph(id="choropleth", figure={}, config={'scrollZoom': False}),
         dcc.Graph(id="density_map", figure={}, config={'scrollZoom': True}),
         html.Div(id='output_container', children=[]),
@@ -108,9 +135,9 @@ def update_graph(option_selected, option_selected2, option_selected3):
         filtered_df_weather = filtered_df_casualty[filtered_df_casualty['Weather_Conditions'] == option_selected2]
     filtered_df_weather['Accidents_amount'] = filtered_df_weather['Accident_Index']
     if option_selected3 == 'All':
-        filtered_df_junction = filtered_df_casualty  # if all is selected, do not filter
+        filtered_df_junction = filtered_df_weather  # if all is selected, do not filter
     else:
-        filtered_df_junction = filtered_df_casualty[filtered_df_casualty['Junction_Control'] == option_selected3]
+        filtered_df_junction = filtered_df_weather[filtered_df_weather['Junction_Control'] == option_selected3]
     filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
     filtered_group_df = filtered_df_junction.groupby('Local_Authority_(District)').count()[
         'Accidents_amount'].to_frame().reset_index()
@@ -118,14 +145,16 @@ def update_graph(option_selected, option_selected2, option_selected3):
                         geojson=hucs_rewound, color="Accidents_amount",
                         locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
                         projection="mercator", range_color=[0, filtered_group_df['Accidents_amount'].max()],
-                        color_continuous_scale=px.colors.sequential.Reds, height=650)
+                        color_continuous_scale=px.colors.sequential.Reds, height=500)
     fig_density = px.density_mapbox(filtered_df_junction, lat='Latitude', lon='Longitude', radius=3,
                             center=dict(lat=54.328506, lon=-2.744644), zoom=4,
                             mapbox_style='mapbox://styles/lucasvm/ckypzzw6kq7i815pcy5ig2slk',
                             color_continuous_scale=px.colors.sequential.OrRd)
 
     fig_choropleth.update_geos(fitbounds="locations", visible=False)
-    fig_choropleth.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+    fig_choropleth.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0},coloraxis_colorbar=dict(
+    title="Number of accidents",
+    len=0.5)) #, title=dict(text="A Figure Specified By A Graph Object"), title_font_size= 30)
     text = 'The level of severity chosen was: {}, weather condition {} and junction control {}.'.format(option_selected,
                                                                                                         option_selected2,
                                                                                                         option_selected3)
