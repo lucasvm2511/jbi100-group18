@@ -183,7 +183,7 @@ def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b
         fig_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, coloraxis_colorbar=dict(
             title="Number of accidents",
             len=0.5))  # , title=dict(text="A Figure Specified By A Graph Object"), title_font_size= 30)
-    if button2 or (filterchange and (filterchange or absrelchange)):
+    if button2 or (button2 and (filterchange or absrelchange)):
         fig_map = px.density_mapbox(filtered_df_junction, lat='Latitude', lon='Longitude', radius=3, #density map
                                 center=dict(lat=51.5085300, lon=-0.1257400), zoom=7,
                                 mapbox_style='mapbox://styles/lucasvm/ckypzzw6kq7i815pcy5ig2slk',
