@@ -1,6 +1,6 @@
 # Import libraries needed
 import dash
-from dash import dcc, html
+from dash import dcc, html, callback_context
 from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
@@ -103,11 +103,10 @@ app.layout = html.Div([
               dcc.Graph(id='age_hist', figure={}),
               dcc.Graph(id='district_graph', figure={})], style={'width': '30%', 'display': 'inline-block'}),
     html.Div(children=[
-        html.Button('Show density heatmap', id='btn_1', n_clicks=0),
-        html.Button('Show district heatmap', id='btn_2', n_clicks=0),
+        html.Button('Show density heatmap', id='btn_2', n_clicks=0),
+        html.Button('Show district heatmap', id='btn_1', n_clicks=0),
         html.Button('Set colors', id='btn_3', n_clicks=0),
-        dcc.Graph(id="choropleth", figure={}, config={'scrollZoom': False}),
-        dcc.Graph(id="density_map", figure={}, config={'scrollZoom': True}),
+        dcc.Graph(id="fig_map", figure={}, config={'scrollZoom': False}),
         html.Div(id='output_container', children=[]),
         html.Div(id='output_container2', children=[]),
         html.Div(id='output_container3', children=[])],
@@ -117,14 +116,16 @@ app.layout = html.Div([
 # Callback; Connect the plotly graphs with dash components; inserts data in the dash components
 @app.callback(
     [Output(component_id="output_container", component_property="children"),
-     Output(component_id="choropleth", component_property="figure"),
-     Output(component_id="density_map", component_property="figure"),],
+     Output(component_id="fig_map", component_property="figure"),],
     [Input(component_id="Casualty_Severity", component_property="value"),
      Input(component_id="weather_conditions", component_property="value"),
-     Input(component_id="junction_control", component_property="value")]
+     Input(component_id="junction_control", component_property="value"),
+     Input(component_id="btn_1", component_property='n_clicks'),
+     Input(component_id="btn_2", component_property='n_clicks'),
+     Input(component_id="btn_3", component_property='n_clicks')]
 )
 # Argument in function refers to component_property in the Input(), here 3 arguments so three inputs in callback
-def update_graph(option_selected, option_selected2, option_selected3):
+def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b1, n_clicks_b2, n_clicks_b3):
     if option_selected == 'All':
         filtered_df_casualty = road_df  # if all is selected, do not filter
     else:
@@ -141,30 +142,36 @@ def update_graph(option_selected, option_selected2, option_selected3):
     filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
     filtered_group_df = filtered_df_junction.groupby('Local_Authority_(District)').count()[
         'Accidents_amount'].to_frame().reset_index()
-    fig_choropleth = px.choropleth(data_frame=filtered_group_df,
-                        geojson=hucs_rewound, color="Accidents_amount",
-                        locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
-                        projection="mercator", range_color=[0, filtered_group_df['Accidents_amount'].max()],
-                        color_continuous_scale=px.colors.sequential.Reds, height=500)
-    fig_density = px.density_mapbox(filtered_df_junction, lat='Latitude', lon='Longitude', radius=3,
-                            center=dict(lat=54.328506, lon=-2.744644), zoom=4,
-                            mapbox_style='mapbox://styles/lucasvm/ckypzzw6kq7i815pcy5ig2slk',
-                            color_continuous_scale=px.colors.sequential.OrRd)
 
-    fig_choropleth.update_geos(fitbounds="locations", visible=False)
-    fig_choropleth.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0},coloraxis_colorbar=dict(
-    title="Number of accidents",
-    len=0.5)) #, title=dict(text="A Figure Specified By A Graph Object"), title_font_size= 30)
+    changed_id = [p['prop_id'] for p in callback_context.triggered][0]
+    colorscale_list = [px.colors.sequential.tempo, px.colors.sequential.Reds, px.colors.sequential.matter, px.colors.sequential.Cividis]
+
+    if ('btn_1' in changed_id) or (n_clicks_b1==0 and n_clicks_b2==0):
+        fig_map = px.choropleth(data_frame=filtered_group_df, #choropleth
+                            geojson=hucs_rewound, color="Accidents_amount",
+                            locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
+                            projection="mercator", range_color=[0, filtered_group_df['Accidents_amount'].max()],
+                            color_continuous_scale=colorscale_list[n_clicks_b3], height=500)
+        fig_map.update_geos(fitbounds="locations", visible=False)
+        fig_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, coloraxis_colorbar=dict(
+            title="Number of accidents",
+            len=0.5))  # , title=dict(text="A Figure Specified By A Graph Object"), title_font_size= 30)
+    if 'btn_2' in changed_id:
+        fig_map = px.density_mapbox(filtered_df_junction, lat='Latitude', lon='Longitude', radius=3, #density
+                                center=dict(lat=54.328506, lon=-2.744644), zoom=7,
+                                mapbox_style='mapbox://styles/lucasvm/ckypzzw6kq7i815pcy5ig2slk',
+                                color_continuous_scale=colorscale_list[n_clicks_b3])
+
     text = 'The level of severity chosen was: {}, weather condition {} and junction control {}.'.format(option_selected,
                                                                                                         option_selected2,
                                                                                                         option_selected3)
     # What you return: is going into the Output, vb: here 1 output so 1 argument return
-    return text, fig_choropleth, fig_density
+    return text, fig_map
 @app.callback(
     [Output(component_id="output_container2", component_property="children"),
      Output(component_id="district_graph", component_property="figure"),
      Output(component_id="age_hist", component_property="figure")],
-    [Input('choropleth', 'clickData')])
+    [Input('fig_map', 'clickData')])
 def select_district(clickData):
     fig = {}
     district = None
@@ -195,4 +202,3 @@ def select_district(clickData):
 
 
 app.run_server(debug=True)
-# test
