@@ -175,7 +175,7 @@ def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b
         absrelchange=False
     if (button1 or (button1 and (filterchange or absrelchange)) or (n_clicks_b1==0 and n_clicks_b2==0)):
         fig_map = px.choropleth(data_frame=merged, #choropleth map
-                            geojson=hucs_rewound, color="Accidents_amount",
+                            geojson=hucs_rewound, color=amount_column,
                             locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
                             projection="mercator", range_color=[0, merged[amount_column].max()],
                             color_continuous_scale=colorscale_list[n_clicks_b3%4], height=500)
