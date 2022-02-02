@@ -14,6 +14,7 @@ from collections import defaultdict
 app = dash.Dash(__name__)
 # --------------------------------------------------------------------
 # Load dataframe of accidents
+pd.set_option('precision', 2) #round pandas values to 2 decimal places
 px.set_mapbox_access_token(
     'pk.eyJ1IjoibHVjYXN2bSIsImEiOiJja3lsYmg4aTMwNHY5Mm9wYmxrMGNmeTdmIn0.zPxtZHL_qWWh13-Np-zmog')  # set mapbox token
 road_df = pd.read_csv('dataset.csv')
@@ -47,6 +48,12 @@ population_df.set_index('district', inplace=True)
 # Manipulate dataframe to get the data needed
 my_map = names_df.to_dict()
 my_map_population = population_df.to_dict()
+my_map_gender = {
+    1:'Male',
+    2:'Female',
+    3:'Unknown'
+}
+road_df['Sex_of_Driver'] = road_df['Sex_of_Driver'].map(my_map_gender)
 road_df['Local_Authority_(District)'].replace(my_map['district_name'],
                                               inplace=True)  # replace district id with district name
 road_df['Population'] = road_df['Local_Authority_(District)']
@@ -66,8 +73,6 @@ severity = road_df.Casualty_Severity.unique()
 Weather_Conditions = road_df.Weather_Conditions.unique()
 junction_control = road_df.Junction_Control.unique()
 
-print(population_df.head(5))
-print(population_df.loc['Northumberland'])
 # ----------------------------------------------------------------------
 # App layout: Describes what the application look like; aka dash components (without data)
 app.layout = html.Div([
@@ -108,14 +113,15 @@ app.layout = html.Div([
                            style={}
                            ),
               dcc.Graph(id='age_hist', figure={}),
-              dcc.Graph(id='district_graph', figure={})], style={'width': '30%', 'display': 'inline-block'}),
+              dcc.Graph(id='speed_bar', figure={})], style={'width': '30%', 'display': 'inline-block'}),
     html.Div(children=[
         html.Button('Show density heatmap', id='btn_2', n_clicks=0),
         html.Button('Show district heatmap', id='btn_1', n_clicks=0),
         html.Button('Change colors', id='btn_3', n_clicks=0),
         html.Button('Change to absolute/relative amount', id='btn_4', n_clicks=0),
-        dcc.Graph(id="fig_map", figure={}, config={'scrollZoom': False,}),
+        dcc.Graph(id="fig_map", figure={}, config={'scrollZoom': True, }),
         dcc.Graph(id='time_hist'),
+        dcc.Graph(id='monthly_bar'),
         html.Div(id='output_container', children=[]),
         html.Div(id='output_container2', children=[]),
         html.Div(id='output_container3', children=[])],
@@ -153,7 +159,7 @@ def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b
     else:
         filtered_df_junction = filtered_df_weather[filtered_df_weather['Junction_Control'] == option_selected3]
     filtered_df_junction['Accidents_amount'] = filtered_df_junction['Accident_Index']
-    global filtered_road_df #make the filtered dataframe available to the other callback
+    global filtered_road_df  # make the filtered dataframe available to the other callback
     filtered_road_df = filtered_df_junction
     filtered_group_df = filtered_df_junction.groupby('Local_Authority_(District)').count()[
         'Accidents_amount'].to_frame().reset_index()
@@ -181,9 +187,11 @@ def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b
         button2 = True
     if ('btn_4' in changed_id and (n_clicks_b4 % 2 == 0)) or (n_clicks_b4 == 0):
         amount_column = 'Accidents_amount'
+        coloraxis_title = "Number of accidents"
         absrelchange = True
     elif 'btn_4' in changed_id and (n_clicks_b4 % 2 == 1):
         amount_column = 'per10000'
+        coloraxis_title = "Number of accidents per 10000"
         absrelchange = True
     else:
         absrelchange = False
@@ -192,12 +200,15 @@ def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b
                                 geojson=hucs_rewound, color=amount_column,
                                 locations="Local_Authority_(District)", featureidkey="properties.NAME_3",
                                 projection="mercator", range_color=[0, merged[amount_column].max()],
-                                hover_name='Local_Authority_(District)',hover_data={'Accidents_amount':True, 'per10000':True, 'population':True, 'Local_Authority_(District)':False},
-                                labels={'Accidents_amount':'Number of accidents','per10000':'Number of accidents per 10000', 'population':'Population'},
+                                hover_name='Local_Authority_(District)',
+                                hover_data={'Accidents_amount': True, 'per10000': ':.2f', 'population': True,
+                                            'Local_Authority_(District)': False},
+                                labels={'Accidents_amount': 'Number of accidents',
+                                        'per10000': 'Number of accidents per 10000', 'population': 'Population'},
                                 color_continuous_scale=colorscale_list[n_clicks_b3 % 4], height=500)
         fig_map.update_geos(fitbounds="locations", visible=False)
         fig_map.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0}, coloraxis_colorbar=dict(
-            title="Number of accidents",
+            title=coloraxis_title,
             len=0.5))  # , title=dict(text="A Figure Specified By A Graph Object"), title_font_size= 30)
     if button2 or (button2 and (filterchange or absrelchange)):
         fig_map = px.density_mapbox(filtered_df_junction, lat='Latitude', lon='Longitude', radius=3,  # density map
@@ -214,40 +225,101 @@ def update_graph(option_selected, option_selected2, option_selected3, n_clicks_b
 
 @app.callback(
     [Output(component_id="output_container2", component_property="children"),
-     Output(component_id="district_graph", component_property="figure"),
+     Output(component_id="speed_bar", component_property="figure"),
      Output(component_id="age_hist", component_property="figure"),
-     Output(component_id="time_hist", component_property='figure')],
+     Output(component_id="time_hist", component_property='figure'),
+     Output(component_id="monthly_bar", component_property='figure')],
     [Input('fig_map', 'clickData'),
      Input(component_id="fig_map", component_property="figure")])
 def select_district(clickData, a):
     district = None
-    if clickData is not None: #if a location is clicked on the map
+    if clickData is not None:  # if a location is clicked on the map
 
         district = clickData['points'][0]['location']
+        new_names = {'0': 'Other districts', '1': district}
         d = defaultdict(lambda: '0')  # give not selected district value zero
         d[district] = '1'  # give selected district value one
-        road_df['selected_district_bool'] = road_df['Local_Authority_(District)'].map(d)
-        new = road_df.groupby(['selected_district_bool', 'Speed_limit']).count()[['Accident_Index']].reset_index()
-        new.loc[new['selected_district_bool'] == '0', 'Accident_Index'] = new.loc[new['selected_district_bool'] == '0', 'Accident_Index'] / (6722-(population_df.loc[district,'population']/10000))
-        new.loc[new['selected_district_bool'] == '1', 'Accident_Index'] = new.loc[new['selected_district_bool'] == '1', 'Accident_Index'] / (population_df.loc[district,'population']/10000)
-        fig = px.bar(new, x='Speed_limit', y='Accident_Index', color='selected_district_bool',
-                     barmode="group", title=str('Amount of accidents per speed limit in ' + district))
-        age_hist = px.histogram(road_df, x='Age_of_Driver',color='selected_district_bool',
+        filtered_road_df['selected_district_bool'] = filtered_road_df['Local_Authority_(District)'].map(d)
+        new = filtered_road_df.groupby(['selected_district_bool', 'Speed_limit']).count()[
+            ['Accident_Index']].reset_index()
+        new.loc[new['selected_district_bool'] == '0', 'Accident_Index'] = new.loc[new[
+                                                                                      'selected_district_bool'] == '0', 'Accident_Index'] / (
+                                                                                      6722 - (population_df.loc[
+                                                                                                  district, 'population'] / 10000))
+        new.loc[new['selected_district_bool'] == '1', 'Accident_Index'] = new.loc[new[
+                                                                                      'selected_district_bool'] == '1', 'Accident_Index'] / (
+                                                                                      population_df.loc[
+                                                                                          district, 'population'] / 10000)
+        speed_bar = px.bar(new, x='Speed_limit', y='Accident_Index', color='selected_district_bool',
+                           barmode="group", title=str('Amount of accidents per speed limit in<br><b>' + district+'</b>'),labels={
+                     "Accident_Index": "Accidents per 10000", 'selected_district_bool':'District'})
+        speed_bar.for_each_trace(lambda t: t.update(name=new_names[t.name]))
+        age_hist = px.histogram(filtered_road_df[filtered_road_df['Age_of_Driver'] != '?'], x='Age_of_Driver',
+                                color='selected_district_bool',
                                 category_orders={"Age_of_Driver": [*range(100), '?']},
-                                title=str('Driver age histogram in ' + district), histnorm='probability', barmode='overlay')
-        time_hist = px.histogram(road_df, x="Time2", nbins=24, color='selected_district_bool', histnorm='probability', barmode='overlay', title=str('Accident time in ' + district))
-        time_hist.update_layout(xaxis_title="Time of the day (hour)")
+                                title=str('Driver age histogram in <b>' + district + '</b>'), histnorm='probability',
+                                barmode='overlay',labels={"Accident_Index": "Accidents per 10000", 'selected_district_bool':'District'})
+        age_hist.for_each_trace(lambda t: t.update(name=new_names[t.name]))
+        age_hist.update_layout(xaxis_title="Age of driver")
+        time_hist = px.histogram(filtered_road_df, x="Time2", nbins=24, color='selected_district_bool',
+                                 histnorm='probability', barmode='overlay', title=str('Accident time in ' + district),labels={
+                     "Time2": "Time of the day (hour)", "Sex_of_Driver": "Gender",'selected_district_bool':'District'})
+        time_hist.for_each_trace(lambda t: t.update(name=new_names[t.name]))
+        time_hist.update_layout(xaxis_tickformat="%H:%M")
     else:
         df_gb = filtered_road_df.groupby(['Speed_limit']).count()[['Accident_Index']].reset_index()
-        fig = px.bar(df_gb, x='Speed_limit', y='Accident_Index',
-                     title=str('Amount of accidents per speed limit in Great Britain'))
-        age_hist = px.histogram(filtered_road_df, x='Age_of_Driver',
+        df_gb['Accident_Index'] = df_gb['Accident_Index']/6722
+        speed_bar = px.bar(df_gb, x='Speed_limit', y='Accident_Index',
+                           title=str('Amount of accidents per speed limit in <br><b>Great Britain</b>'),
+                            hover_data={'Accident_Index':':.2f'},labels={"Accident_Index": "Accidents per 10000"})
+        age_hist = px.histogram(filtered_road_df[filtered_road_df['Age_of_Driver'] != '?'], x='Age_of_Driver',
                                 category_orders={"Age_of_Driver": [*range(100), '?']},
-                                title=str('Driver age histogram in Great Britain'))
+                                title=str('Driver age histogram in <b>Great Britain</b>'))
+        age_hist.update_layout(xaxis_title="Age of driver", yaxis_title="Accidents")
+        time_hist = px.histogram(filtered_road_df, x="Time2", nbins=24, color='Sex_of_Driver',
+                                 title=str('Accident time in <b>Great Britain</b> Per sex'),labels={
+                     "Time2": "Time of the day (hour)", "Sex_of_Driver": "Gender"},barmode='overlay')
+        time_hist.update_layout(yaxis_title="Accidents",xaxis_tickformat ="%H:%M")
+    monthly_data = filtered_road_df.reset_index()
+    monthly_data["Date"] = [x[3:-5] for x in monthly_data["Date"].astype(str)]
+    monthly_data = monthly_data.groupby(by=['Date', 'Weather_Conditions']).count().reset_index()
+    monthly_data.rename({'Date': 'Month', 'Weather_Conditions': 'Weather Condition', 'index': 'Number of accidents'},
+                        axis='columns', inplace=True)
+    month_map = {
+        '01': 'January',
+        '02': 'February',
+        '03': 'March',
+        '04': 'April',
+        '05': 'May',
+        '06': 'June',
+        '07': 'July',
+        '08': 'August',
+        '09': 'September',
+        '10': 'October',
+        '11': 'November',
+        '12': 'December',
+    }
+    weather_map = {
+        1: 'Fine no high winds',
+        2: 'Raining no high winds',
+        3: 'Snowing no high winds',
+        4: 'Fine + high winds',
+        5: 'Raining + high winds',
+        6: 'Snowing + high winds',
+        7: 'Fog or mist',
+        8: 'Other',
+        9: 'Unknown',
+    }
+    monthly_data['Month'] = monthly_data['Month'].map(month_map)
+    monthly_data['Weather Condition'] = monthly_data['Weather Condition'].map(weather_map)
 
-        time_hist = px.histogram(filtered_road_df, x="Time2", nbins=24, color='Sex_of_Driver',title=str('Accident time in Great Britain Per sex'))
-        time_hist.update_layout(xaxis_title="Time of the day (hour)", barmode='overlay')
-    return district, fig, age_hist, time_hist
+    monthly_bar = px.bar(monthly_data, x="Month", y="Number of accidents", color="Weather Condition",
+                         title="Number of accidents vs weather conditions in <b>Great Britain</b>")
+
+    speed_bar.update_layout(xaxis_title="Speed limit in mph",yaxis_title="Accidents per 10000")
+
+
+    return district, speed_bar, age_hist, time_hist, monthly_bar
 
 
 app.run_server(debug=True)
