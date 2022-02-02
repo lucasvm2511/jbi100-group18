@@ -96,7 +96,10 @@ app.layout = html.Div([
                                     {'label': 'Snowing no high winds', 'value': 3},
                                     {'label': 'Fine + high winds', 'value': 4},
                                     {'label': 'Raining + high winds', 'value': 5},
-                                    {'label': 'Snowing + high winds', 'value': 6}],
+                                    {'label': 'Snowing + high winds', 'value': 6},
+                                    {'label': 'Fog or mist', 'value': 7},
+                                    {'label': 'Other', 'value': 8},
+                                    {'label': 'Unknown', 'value': 9}],
                            multi=False,
                            value='All',
                            style={}
